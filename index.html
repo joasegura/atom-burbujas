@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <title>ATOM – Fondo burbujas + logo</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <canvas id="bubbles-canvas"></canvas>
+  <canvas id="ui-canvas"></canvas>
+
+  <header class="navbar" role="banner">
+    <div class="nav-wrap">
+      <div class="nav-left">
+        <img src="img/LOGO ATOM.png" alt="ATOM logo" class="nav-logo">
+      </div>
+      <nav class="nav-center" aria-label="Principal">
+        <a href="#que-hacemos" class="nav-link">Que hacemos?!</a>
+        <a href="#quienes-somos" class="nav-link">Quienes somos?</a>
+      </nav>
+      <div class="nav-right">
+        <a href="#nexus" class="nav-btn">Nexus</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <h1 class="typewriter" aria-label="atom.">atom.</h1>
+    <a class="cta" href="#" aria-label="Agenda una call">Agenda una call</a>
+  </main>
+
+  <script src="js/bubbles.js"></script>
+  <script src="js/uiOverlay.js"></script>
+  <script src="js/typewriter.js"></script>
+</body>
+</html>
