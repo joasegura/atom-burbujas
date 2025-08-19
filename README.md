@@ -1,59 +1,124 @@
-# ATOM – Fondo de burbujas + UI
+# ATOM React - Fondo burbujas + logo
 
-## Estructura
-- `index.html`: HTML mínimo que referencia estilos y scripts externos.
-- `css/styles.css`: Estilos globales, layout, tipografía, estados de interacción.
-- `js/bubbles.js`: Animación del fondo de burbujas en `<canvas>` (composición y sombreado).
-- `js/uiOverlay.js`: Render del texto y borde del botón en el `canvas` de UI con contraste dinámico.
-- `js/typewriter.js`: Efecto máquina de escribir accesible (respeta `prefers-reduced-motion`).
-- `img/`: Activos estáticos.
+Este es el proyecto ATOM migrado a React, manteniendo toda la funcionalidad original del sitio web con animaciones de burbujas, efecto de máquina de escribir y overlay de UI adaptativo.
 
-## Desarrollo local
-Solo abre `index.html` en el navegador. No requiere build.
+## Características
 
-## Guía de migración a React (propuesta)
-Objetivo: Mantener la animación en canvas y mover el UI DOM a componentes React para escalar funcionalidades.
+- ✨ Animación de burbujas en tiempo real con efectos 3D
+- ⌨️ Efecto de máquina de escribir para el título
+- 🎨 Overlay de UI que se adapta al fondo dinámicamente
+- 📱 Diseño responsive
+- ♿ Soporte para preferencias de movimiento reducido
+- 🚀 Construido con React 18 y Vite
 
-1. Inicializar proyecto
-```
-npm create vite@latest atom-burbuja -- --template react
-cd atom-burbuja
-npm i
-```
+## Tecnologías utilizadas
 
-2. Estructura sugerida
+- **React 18** - Framework de UI
+- **Vite** - Build tool y dev server
+- **Canvas API** - Para las animaciones de burbujas y UI
+- **CSS3** - Estilos y animaciones
+- **Hooks personalizados** - Para la lógica de animaciones
+
+## Estructura del proyecto
+
 ```
 src/
-  components/
-    TypewriterTitle.tsx
-    CtaButton.tsx
-  hooks/
-    useCanvasSize.ts
-  canvas/
-    bubbles.ts  (mismo código actual exportado como función initBubbles)
-    uiOverlay.ts (exportar initUiOverlay)
-  App.tsx
-  main.tsx
-assets/
-  LOGO ATOM.png
+├── components/
+│   ├── Navbar.jsx      # Componente de navegación
+│   └── Content.jsx     # Contenido principal
+├── hooks/
+│   ├── useBubbles.js   # Hook para animación de burbujas
+│   ├── useUIOverlay.js # Hook para overlay de UI
+│   └── useTypewriter.js # Hook para efecto máquina de escribir
+├── App.jsx             # Componente principal
+├── main.jsx           # Punto de entrada
+└── index.css          # Estilos globales
 ```
 
-3. Integración canvas
-- Exponer `initBubbles(rootCanvas)` y `initUiOverlay(uiCanvas, refs)` que devuelvan una función de limpieza.
-- En `App.tsx`, montar dos `<canvas>` y, en `useEffect`, llamar a los inits con refs.
+## Instalación y uso
 
-4. Componentes UI
-- `TypewriterTitle` y `CtaButton` como componentes controlados; pasarles texto/handlers por props.
-- Mantener la lógica de accesibilidad (labels, `prefers-reduced-motion`).
+1. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-5. Theming
-- Conservar CSS variables (`--bg`) en `:root` y usar CSS Modules o Tailwind según preferencia.
+2. **Ejecutar en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
 
-6. Futuras funcionalidades
-- Routing (React Router) para más secciones.
-- Estado global ligero (Zustand) para tema/idioma.
-- i18n (react-i18next).
-- Tests de integración (Playwright) para visual regresión de canvas.
+3. **Construir para producción:**
+   ```bash
+   npm run build
+   ```
 
-## Notas
-- El color primario del branding es `#0097f6` y ya se usa en la paleta de burbujas y UI.
+4. **Previsualizar build de producción:**
+   ```bash
+   npm run preview
+   ```
+
+## Hooks personalizados
+
+### useBubbles()
+Maneja la animación de burbujas en el canvas de fondo. Incluye:
+- Generación de burbujas con propiedades aleatorias
+- Efectos de iluminación y sombreado 3D
+- Movimiento suave con deriva senoidal
+- Optimización de rendimiento
+
+### useUIOverlay(bubblesCanvasRef)
+Renderiza el overlay de UI que se adapta al fondo:
+- Texto y botones con contraste dinámico
+- Muestreo del fondo para calcular colores óptimos
+- Bordes adaptativos para botones
+
+### useTypewriter(text, options)
+Implementa el efecto de máquina de escribir:
+- Velocidad configurable de escritura/borrado
+- Pausas personalizables
+- Soporte para loop infinito
+- Respeto por preferencias de movimiento reducido
+
+## Personalización
+
+### Colores
+Los colores principales se definen en `src/index.css`:
+```css
+:root {
+  --bg: #c2c2c2;      /* Color de fondo */
+  --c1: #00d0ff96;    /* Color primario */
+  --c2: #0099cc94;    /* Color secundario */
+}
+```
+
+### Configuración de burbujas
+En `src/hooks/useBubbles.js`:
+```javascript
+const CFG = {
+  count: 3,        // Cantidad de burbujas
+  minSize: 240,    // Tamaño mínimo
+  maxSize: 720,    // Tamaño máximo
+  baseSpeed: 5.11, // Velocidad base
+  drift: 5.7,      // Deriva senoidal
+  shadow: 25,      // Blur del halo
+  alpha: 6.20,     // Opacidad
+};
+```
+
+## Accesibilidad
+
+- Soporte completo para `prefers-reduced-motion`
+- Navegación por teclado
+- Etiquetas ARIA apropiadas
+- Contraste dinámico automático
+
+## Rendimiento
+
+- Uso de `requestAnimationFrame` para animaciones suaves
+- Cleanup automático de event listeners y animaciones
+- Optimización de canvas con device pixel ratio
+- Lazy loading de componentes
+
+## Licencia
+
+Este proyecto mantiene la misma licencia que el proyecto original.
