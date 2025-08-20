@@ -13,6 +13,7 @@ export const useUIOverlay = (bubblesCanvasRef) => {
     const DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
 
     const BASE = { r: 0, g: 153, b: 204 };
+    const NAV_BASE = { r: 2, g: 136, b: 234 }; // #0288EA
     const DARK = { r: 0, g: 44, b: 66 };
     const WHITE = { r: 255, g: 255, b: 255 };
 
@@ -158,35 +159,64 @@ export const useUIOverlay = (bubblesCanvasRef) => {
       }
     }
 
-    function colorizeLink(el) {
-      const rect = el.getBoundingClientRect();
-      if (rect.width <= 0 || rect.height <= 0) return;
-      const sX = Math.floor(rect.left * DPR);
-      const sY = Math.floor(rect.top * DPR);
-      const sW = Math.max(1, Math.floor(rect.width * DPR));
-      const sH = Math.max(1, Math.floor(rect.height * DPR));
-      const sample = document.createElement('canvas');
-      sample.width = sW; sample.height = sH;
-      const sctx = sample.getContext('2d');
-      try { sctx.drawImage(bgCanvas, sX, sY, sW, sH, 0, 0, sW, sH); } catch (e) { return; }
-      const data = sctx.getImageData(0, 0, sW, sH).data;
-      let sumR = 0, sumG = 0, sumB = 0, sumA = 0, count = 0;
-      for (let i = 0; i < data.length; i += 4) {
-        const a = data[i + 3] / 255;
-        sumA += a; sumR += data[i] * a; sumG += data[i + 1] * a; sumB += data[i + 2] * a; count++;
-      }
-      const rB = count ? Math.round(sumR / Math.max(1, sumA)) : bgRGB.r;
-      const gB = count ? Math.round(sumG / Math.max(1, sumA)) : bgRGB.g;
-      const bB = count ? Math.round(sumB / Math.max(1, sumA)) : bgRGB.b;
-      const y = luminance(rB, gB, bB);
-      const target = (y < 0.5) ? WHITE : DARK;
-      // Mezclar color de marca (BASE) con alto contraste para conservar identidad
-      const mix = 0.6; // 0 = solo brand, 1 = solo contraste
-      const r = Math.round(lerp(BASE.r, target.r, mix));
-      const g = Math.round(lerp(BASE.g, target.g, mix));
-      const b = Math.round(lerp(BASE.b, target.b, mix));
-      el.style.color = `rgb(${r},${g},${b})`;
-    }
+                 function colorizeLink(el) {
+       const rect = el.getBoundingClientRect();
+       if (rect.width <= 0 || rect.height <= 0) return;
+       
+       // Usar el mismo enfoque que renderElement para detectar burbujas
+       const sX = Math.floor(rect.left * DPR);
+       const sY = Math.floor(rect.top * DPR);
+       const sW = Math.floor(rect.width * DPR);
+       const sH = Math.floor(rect.height * DPR);
+       
+       const sample = document.createElement('canvas');
+       sample.width = rect.width;
+       sample.height = rect.height;
+       const sctx = sample.getContext('2d');
+       
+       try {
+         sctx.drawImage(bgCanvas, sX, sY, sW, sH, 0, 0, rect.width, rect.height);
+       } catch (e) { 
+         return; 
+       }
+       
+       const data = sctx.getImageData(0, 0, rect.width, rect.height).data;
+       let maxDelta = 0;
+       
+       // Buscar el máximo delta de luminancia (donde están las burbujas)
+       for (let i = 0; i < data.length; i += 4) {
+         const rB = data[i], gB = data[i + 1], bB = data[i + 2];
+         const aB = data[i + 3] / 255;
+         const rC = Math.round(rB * aB + bgRGB.r * (1 - aB));
+         const gC = Math.round(gB * aB + bgRGB.g * (1 - aB));
+         const bC = Math.round(bB * aB + bgRGB.b * (1 - aB));
+         const y = luminance(rC, gC, bC);
+         const delta = Math.abs(y - bgY);
+         if (delta > maxDelta) {
+           maxDelta = delta;
+         }
+       }
+       
+       // Hacer la transición más sensible y clara
+       const t = smoothstep(0.04, 0.2, maxDelta);
+       // Cuando hay burbujas, cambiar completamente a blanco
+       // Cuando no hay burbujas, usar el color base NAV_BASE
+       const r = Math.round(lerp(NAV_BASE.r, WHITE.r, t));
+       const g = Math.round(lerp(NAV_BASE.g, WHITE.g, t));
+       const b = Math.round(lerp(NAV_BASE.b, WHITE.b, t));
+       
+       // Debug: mostrar valores cuando hay burbujas detectadas
+       if (maxDelta > 0.05) {
+         console.log(`Burbuja detectada en ${el.textContent}: maxDelta=${maxDelta.toFixed(3)}, t=${t.toFixed(3)}, color=rgb(${r},${g},${b})`);
+       }
+       
+       el.style.color = `rgb(${r},${g},${b})`;
+       
+       // Si es el botón nav-btn, también cambiar el color del borde
+       if (el.classList.contains('nav-btn')) {
+         el.style.borderColor = `rgb(${r},${g},${b})`;
+       }
+     }
 
     function loop() {
       ui.clearRect(0, 0, uiCanvas.width, uiCanvas.height);
@@ -195,6 +225,7 @@ export const useUIOverlay = (bubblesCanvasRef) => {
       const titleEl = document.querySelector('.typewriter');
       const btnEl = document.querySelector('.cta');
       const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+      const navBtn = document.querySelector('.nav-btn');
       
       if (titleEl) {
         renderElement(titleEl, BASE, { center: false });
@@ -203,6 +234,9 @@ export const useUIOverlay = (bubblesCanvasRef) => {
         renderElement(btnEl, BASE, { center: true, drawBorder: true });
       }
       navLinks.forEach(a => colorizeLink(a));
+      if (navBtn) {
+        colorizeLink(navBtn);
+      }
       
       animationRef.current = requestAnimationFrame(loop);
     }
