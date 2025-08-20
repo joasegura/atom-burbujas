@@ -40,7 +40,7 @@ const Navbar = () => {
     <header className="navbar" role="banner">
       <div className="nav-wrap">
         <div className="nav-left">
-          <img src="/atom-react/public/logo-atom.png" alt="ATOM logo" className="nav-logo" />
+          <img src="img/LOGO ATOM.png" alt="ATOM logo" className="nav-logo" />
         </div>
         
         {/* Botón hamburguesa para móviles */}
