@@ -3,8 +3,9 @@ import React from 'react';
 const QuienesSomos = () => {
   return (
     <>
-      <main className="content quienes-somos">
+      <main className="quienes-somos">
         <div className="quienes-somos-container">
+          <h1 className="quienes-somos-title">Quienes Somos</h1>
           <div className="quienes-somos-content">
             <div className="quienes-somos-section">
               <h2 className="section-title">Nuestra Historia</h2>

@@ -12,12 +12,33 @@ body{
 	min-height: 100vh;
 }
 
+/* Clase para páginas con scroll */
+body.has-scroll {
+	overflow-y: auto;
+}
+
+/* Clase para páginas sin scroll (Home) */
+body.no-scroll {
+	overflow: hidden;
+}
+
 /* Canvas fijo al fondo */
 #bubbles-canvas{
 	position:fixed; inset:0; z-index:0; pointer-events:none;
 }
 #ui-canvas{
 	position:fixed; inset:0; z-index:15; pointer-events:none;
+}
+
+/* Contenedor principal de la página Home */
+.home-container {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	padding-top: 80px; /* Espacio para el navbar fijo */
+	padding-bottom: 80px; /* Espacio para el footer */
+	box-sizing: border-box;
 }
 
 /* Contenido (logo) por encima */
@@ -29,7 +50,8 @@ body{
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	min-height: calc(100vh - 120px); /* Restar altura del navbar y footer */
+	height: calc(100vh - 160px); /* Restar altura del navbar y footer */
+	box-sizing: border-box;
 }
 .logo{
 	width:min(80vw, 320px); height:auto; display:block; margin:auto;
@@ -71,14 +93,16 @@ body{
 
 /* Footer */
 .footer {
-	position: static;
-	bottom: auto;
-	left: auto;
-	right: auto;
-	z-index: 10;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
 	padding: 20px;
 	text-align: center;
-	margin-top: 40px;
+	background: transparent;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .footer-content {
@@ -132,14 +156,13 @@ body{
 
 /* Navbar - Mobile First */
 .navbar{
-	position: static; top: auto; left: auto; right: auto; z-index:20;
+	position: fixed; top: 0; left: 0; right: 0; z-index:300; /* Mayor que las páginas de contenido (200) */
 	background: transparent;
 	backdrop-filter: none;
 	-webkit-backdrop-filter: none;
 	color:#fff;
 	/* Asegurar que no haya ningún fondo */
 	box-shadow: none;
-	margin-bottom: 20px;
 }
 .nav-wrap{
 	display:grid; 
@@ -170,7 +193,7 @@ body{
 	border: none;
 	cursor: pointer;
 	padding: 0;
-	z-index: 25;
+	z-index: 350; /* Mayor que el navbar */
 	justify-self: end;
 }
 
@@ -224,7 +247,7 @@ body{
 		gap: 40px;
 		transform: translateX(100%);
 		transition: transform 0.3s ease-in-out;
-		z-index: 25;
+		z-index: 350; /* Mayor que el navbar */
 		border-left: 1px solid rgba(255, 255, 255, 0.1);
 	}
 	
@@ -334,9 +357,14 @@ body{
 
 /* Tablet (768px y superior) */
 @media (min-width: 768px) {
+	.home-container {
+		padding-top: 80px;
+		padding-bottom: 80px;
+	}
+	
 	.content {
 		padding: 0 40px;
-		min-height: calc(100vh - 140px);
+		height: calc(100vh - 160px);
 	}
 	
 	.footer {
@@ -402,9 +430,14 @@ body{
 
 /* Desktop (1024px y superior) */
 @media (min-width: 1024px) {
+	.home-container {
+		padding-top: 88px;
+		padding-bottom: 88px;
+	}
+	
 	.content {
 		padding: 0 60px;
-		min-height: calc(100vh - 160px);
+		height: calc(100vh - 176px);
 	}
 	
 	.footer {
@@ -455,9 +488,14 @@ body{
 
 /* Desktop grande (1440px y superior) */
 @media (min-width: 1440px) {
+	.home-container {
+		padding-top: 88px;
+		padding-bottom: 88px;
+	}
+	
 	.content {
 		padding: 0 80px;
-		min-height: calc(100vh - 180px);
+		height: calc(100vh - 176px);
 	}
 	
 	.nav-wrap {
@@ -467,6 +505,15 @@ body{
 
 /* Orientación landscape en móviles */
 @media (max-width: 767px) and (orientation: landscape) {
+	.home-container {
+		padding-top: 60px;
+		padding-bottom: 60px;
+	}
+	
+	.content {
+		height: calc(100vh - 120px);
+	}
+	
 	.nav-wrap {
 		height: 60px;
 		padding: 0 16px;
@@ -497,9 +544,14 @@ body{
 
 /* Ajustes para pantallas muy pequeñas */
 @media (max-width: 375px) {
+	.home-container {
+		padding-top: 70px;
+		padding-bottom: 70px;
+	}
+	
 	.content {
 		padding: 0 12px;
-		min-height: calc(100vh - 100px);
+		height: calc(100vh - 140px);
 	}
 	
 	.footer {
@@ -574,9 +626,14 @@ body{
 
 /* Ajustes para pantallas muy grandes */
 @media (min-width: 1920px) {
+	.home-container {
+		padding-top: 88px;
+		padding-bottom: 88px;
+	}
+	
 	.content {
 		padding: 0 100px;
-		min-height: calc(100vh - 200px);
+		height: calc(100vh - 176px);
 	}
 	
 	.nav-wrap {
@@ -651,11 +708,13 @@ body{
 .quienes-somos,
 .que-hacemos {
 	position: relative;
-	z-index: 10;
+	z-index: 200; /* Mayor que el navbar (z-index: 100) */
 	text-align: center;
-	padding: 40px 20px 60px;
+	padding: 120px 20px 60px; /* Añadir padding-top para compensar el navbar fijo */
 	max-width: 1200px;
 	margin: 0 auto;
+	min-height: 100vh;
+	box-sizing: border-box;
 }
 
 .quienes-somos-container,
@@ -666,11 +725,13 @@ body{
 	padding: 40px;
 	border: 1px solid rgba(255, 255, 255, 0.15);
 	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+	position: relative;
+	z-index: 200; /* Mayor que el navbar */
 }
 
 .quienes-somos-title,
 .que-hacemos-title {
-	color: transparent;
+	color: #ffffff;
 	font-family: "Inter", system-ui, Segoe UI, Roboto, Arial, sans-serif;
 	font-weight: 600;
 	font-size: 3.5rem;
@@ -766,7 +827,7 @@ body{
 @media (max-width: 768px) {
 	.quienes-somos,
 	.que-hacemos {
-		padding: 30px 16px 50px;
+		padding: 100px 16px 50px; /* Ajustar padding-top para móviles */
 	}
 	
 	.quienes-somos-container,
@@ -796,12 +857,30 @@ body{
 	.valor-item {
 		padding: 20px;
 	}
+	
+	/* Ajustes del footer para móviles */
+	.footer {
+		padding: 16px;
+	}
+	
+	.footer-content {
+		gap: 12px;
+		flex-direction: column;
+	}
+	
+	.footer-link {
+		font-size: 0.85rem;
+	}
+	
+	.footer-separator {
+		display: none; /* Ocultar separador en móviles */
+	}
 }
 
 @media (max-width: 480px) {
 	.quienes-somos,
 	.que-hacemos {
-		padding: 20px 12px 40px;
+		padding: 90px 12px 40px; /* Ajustar padding-top para pantallas muy pequeñas */
 	}
 	
 	.quienes-somos-container,
@@ -834,13 +913,26 @@ body{
 	.valor-text {
 		font-size: 0.9rem;
 	}
+	
+	/* Ajustes del footer para pantallas muy pequeñas */
+	.footer {
+		padding: 12px;
+	}
+	
+	.footer-content {
+		gap: 8px;
+	}
+	
+	.footer-link {
+		font-size: 0.8rem;
+	}
 }
 
 /* Ajustes para pantallas grandes */
 @media (min-width: 1024px) {
 	.quienes-somos,
 	.que-hacemos {
-		padding: 50px 40px 80px;
+		padding: 130px 40px 80px; /* Ajustar padding-top para desktop */
 	}
 	
 	.quienes-somos-container,
@@ -866,7 +958,7 @@ body{
 @media (min-width: 1440px) {
 	.quienes-somos,
 	.que-hacemos {
-		padding: 60px 60px 100px;
+		padding: 140px 60px 100px; /* Ajustar padding-top para pantallas muy grandes */
 	}
 	
 	.quienes-somos-container,

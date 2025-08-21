@@ -7,11 +7,10 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "node ./node_modules/vite/bin/vite.js",
     "build": "node ./node_modules/vite/bin/vite.js build",
-    "preview": "vite preview",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "postinstall": "chmod +x node_modules/.bin/vite || true"
+    "preview": "node ./node_modules/vite/bin/vite.js preview",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "react": "^18.2.0",

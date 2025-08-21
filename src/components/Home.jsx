@@ -5,7 +5,7 @@ const Home = () => {
   const typewriterText = useTypewriter('atom.');
 
   return (
-    <>
+    <div className="home-container">
       <main className="content">
         <h1 className="typewriter" aria-label="atom.">{typewriterText}</h1>
         <a className="cta" href="https://calendar.app.google/GgJ8qUBQSrNkVJ7C6?fbclid=PAZXh0bgNhZW0CMTEAAafZKaOq5-yH-QqhJ6SP-bWujLAn5GrG1HzSPnnIqgPeOXcw9xMVAnysoGJ6Ww_aem_Q8d7V-NaIgZh5FQ0s2APvA" target="_blank" rel="noopener noreferrer" aria-label="Agenda una call">Agenda una call</a>
@@ -32,7 +32,7 @@ const Home = () => {
           </a>
         </div>
       </footer>
-    </>
+    </div>
   );
 };
 

@@ -3,8 +3,9 @@ import React from 'react';
 const QueHacemos = () => {
   return (
     <>
-      <main className="content que-hacemos">
+      <main className="que-hacemos">
         <div className="que-hacemos-container">
+          <h1 className="que-hacemos-title">Que Hacemos</h1>
           <div className="que-hacemos-content">
             <div className="que-hacemos-section">
               <h2 className="section-title">Desarrollo Web</h2>
@@ -16,11 +17,10 @@ const QueHacemos = () => {
             </div>
 
             <div className="que-hacemos-section">
-              <h2 className="section-title">Aplicaciones Móviles</h2>
+              <h2 className="section-title">Desarrollo de Sistemas a Medidas</h2>
               <p className="section-text">
-                Desarrollamos aplicaciones nativas e híbridas para iOS y Android 
-                que ofrecen experiencias de usuario excepcionales y resultados 
-                medibles para tu negocio.
+              Diseñamos y construimos soluciones personalizadas que se adaptan a las necesidades únicas de cada negocio. 
+              Creamos sistemas escalables, seguros y eficientes que optimizan procesos, integran áreas clave y potencian la productividad de tu empresa.
               </p>
             </div>
 
