@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -36,11 +38,18 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
+  // Cerrar menú cuando cambia la ruta
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location]);
+
   return (
     <header className="navbar" role="banner">
       <div className="nav-wrap">
         <div className="nav-left">
-          <img src="img/LOGO ATOM.png" alt="ATOM logo" className="nav-logo" />
+          <Link to="/" className="nav-logo-link">
+            <img src="img/LOGO ATOM.png" alt="ATOM logo" className="nav-logo" />
+          </Link>
         </div>
         
         {/* Botón hamburguesa para móviles */}
@@ -64,8 +73,8 @@ const Navbar = () => {
           role="navigation"
         >
           <div className="nav-center">
-            <a href="#que-hacemos" className="nav-link" onClick={() => setIsMenuOpen(false)}>Que hacemos?</a>
-            <a href="#quienes-somos" className="nav-link" onClick={() => setIsMenuOpen(false)}>Quienes somos?</a>
+            <Link to="/que-hacemos" className="nav-link" onClick={() => setIsMenuOpen(false)}>Que hacemos?</Link>
+            <Link to="/quienes-somos" className="nav-link" onClick={() => setIsMenuOpen(false)}>Quienes somos?</Link>
           </div>
           <div className="nav-right">
             <a href="http://nexus.atomsolucionesit.com.ar/" className="nav-btn" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Nexus</a>
