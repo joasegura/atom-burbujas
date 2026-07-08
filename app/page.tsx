@@ -5,6 +5,7 @@ import { Marquee } from "@/components/marquee"
 import { Services } from "@/components/services"
 import { Industries } from "@/components/industries"
 import { Stats } from "@/components/stats"
+import { Clients } from "@/components/clients"
 import { CTA } from "@/components/cta"
 import { Footer } from "@/components/footer"
 
@@ -19,6 +20,7 @@ export default function Home() {
       <Industries />
       <Stats />
       <CTA />
+      <Clients />
       <Footer />
     </main>
   )

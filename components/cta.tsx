@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
+import { openWhatsApp } from "@/lib/whatsapp"
 
 export function CTA() {
-  const openWhatsApp = () => window.open("https://wa.me/5493772617109", "_blank", "noopener,noreferrer")
   return (
     <section id="contacto" className="py-24 sm:py-32 bg-muted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,7 +49,7 @@ export function CTA() {
             >
               <Button
                 size="lg"
-                onClick={openWhatsApp}
+                onClick={() => openWhatsApp()}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 group"
               >
                 Contactanos
@@ -58,6 +58,7 @@ export function CTA() {
               <Button
                 size="lg"
                 variant="outline"
+                onClick={() => document.querySelector("#clientes")?.scrollIntoView({ behavior: "smooth" })}
                 className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 bg-transparent rounded-full"
               >
                 Ver proyectos

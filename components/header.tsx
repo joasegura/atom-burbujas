@@ -5,15 +5,16 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { openWhatsApp } from "@/lib/whatsapp"
 
 const navigation = [
   {
     name: "Servicios",
     href: "#servicios",
     submenu: [
-      { name: "Sitios y Portales", href: "#sitios" },
-      { name: "Sistemas a Medida", href: "#sistemas" },
-      { name: "Consultoría", href: "#consultoria" },
+      { name: "Sitios y Portales", href: "#sitios-y-portales" },
+      { name: "Sistemas a Medida", href: "#sistemas-a-medida" },
+      { name: "Consultoría", href: "#consultoria-y-acompanamiento" },
     ],
   },
   { name: "Nosotros", href: "#nosotros" },
@@ -38,7 +39,7 @@ export function Header() {
 
   const handleContactClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    window.open("https://wa.me/5493772617109", "_blank", "noopener,noreferrer")
+    openWhatsApp()
     setIsOpen(false)
   }
 
