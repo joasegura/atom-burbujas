@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { supabase } from "@/lib/supabase"
 
+const HABILITADO = false
+
 const vacio = {
   nombre: "",
   telefono: "",
@@ -27,6 +29,10 @@ export default function PostulacionForm() {
 
   async function enviar() {
     if (!completo || enviando) return
+    if (!HABILITADO) {
+      setResultado({ ok: false, motivo: "proximamente" })
+      return
+    }
     setEnviando(true)
     const { data, error } = await supabase.rpc("postular", {
       p_nombre: f.nombre,
@@ -56,6 +62,7 @@ export default function PostulacionForm() {
           {resultado.motivo === "duplicado" && "Ya recibimos una postulación con estos datos."}
           {resultado.motivo === "datos" && "Revisá tu nombre y tu teléfono."}
           {resultado.motivo === "red" && "No se pudo enviar. Probá de nuevo en un minuto."}
+          {resultado.motivo === "proximamente" && "Todavía no está activo. Muy pronto vas a poder postularte acá."}
         </div>
       )}
 

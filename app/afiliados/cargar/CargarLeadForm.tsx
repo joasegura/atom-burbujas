@@ -11,6 +11,8 @@ const PRODUCTOS = [
   { id: "otro", label: "Otro", desc: "Web, e-commerce, o algo que no entra arriba" },
 ];
 
+const HABILITADO = false;
+
 type Chequeo = { estado: string; desde?: string; vence?: string } | null;
 
 const vacio = {
@@ -35,7 +37,7 @@ export default function CargarLeadForm() {
   // la misma empresa y se peleen después por la comisión.
   useEffect(() => {
     clearTimeout(timer.current);
-    if (f.empresa.trim().length < 3) {
+    if (!HABILITADO || f.empresa.trim().length < 3) {
       setChequeo(null);
       return;
     }
@@ -59,6 +61,10 @@ export default function CargarLeadForm() {
 
   async function enviar() {
     if (!completo || enviando) return;
+    if (!HABILITADO) {
+      setResultado({ ok: false, motivo: "proximamente" });
+      return;
+    }
     setEnviando(true);
     const { data, error } = await supabase.rpc("cargar_lead", {
       p_codigo: codigo,
@@ -115,6 +121,7 @@ export default function CargarLeadForm() {
           {resultado.motivo === "vendedor" && "Tu link no está activo. Escribinos para reactivarlo."}
           {resultado.motivo === "datos" && "Revisá el nombre de la empresa y el teléfono."}
           {resultado.motivo === "red" && "No se pudo guardar. Probá de nuevo en un minuto."}
+          {resultado.motivo === "proximamente" && "Todavía no está activo. Muy pronto vas a poder cargar leads acá."}
         </Aviso>
       )}
 
