@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import PostulacionForm from "./PostulacionForm"
 
 export const metadata: Metadata = {
   title: "Programa de referidos | Atom Soluciones IT",
@@ -15,9 +16,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 }
-
-const WA =
-  "https://wa.me/5491126678238?text=Hola,%20quiero%20sumarme%20al%20programa%20de%20referidos%20de%20Atom"
 
 const productos = [
   {
@@ -110,9 +108,7 @@ export default function ReferidosPage() {
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
-              href={WA}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#sumarme"
               className="rounded-lg bg-[#2D9CDB] px-7 py-4 font-extrabold text-[#0B0B0B]"
             >
               Quiero sumarme
@@ -207,25 +203,18 @@ export default function ReferidosPage() {
       </section>
 
       {/* Cierre */}
-      <section>
+      <section id="sumarme" className="scroll-mt-20">
         <div className="mx-auto max-w-5xl px-6 py-20 md:py-24">
           <h2 className="max-w-[18ch] text-3xl font-extrabold tracking-tight md:text-4xl">
             Si tenés los contactos, nosotros ponemos el producto.
           </h2>
-          <div className="mt-8">
-            <a
-              href={WA}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block rounded-lg bg-[#2D9CDB] px-7 py-4 font-extrabold text-[#0B0B0B]"
-            >
-              Escribinos por WhatsApp
-            </a>
-          </div>
-          <p className="mt-6 max-w-[50ch] text-sm text-[#5C6168]">
-            Charlamos quince minutos, vemos si tiene sentido para los dos y te damos tu
-            link personal para cargar leads.
+          <p className="mt-4 max-w-[50ch] text-[#8A8F96]">
+            Contanos en dos minutos con quién trabajás. Si encaja, te damos tu link
+            personal para cargar leads.
           </p>
+          <div className="mt-8 max-w-2xl">
+            <PostulacionForm />
+          </div>
           <p className="mt-8 text-sm text-[#5C6168]">
             <Link href="/" className="underline underline-offset-4">
               Volver al sitio
