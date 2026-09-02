@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
 const PRODUCTOS = [
@@ -220,7 +221,13 @@ const input =
 function Marco({ children }: { children: React.ReactNode }) {
   return (
     <main className="min-h-screen bg-[#0B0B0B] text-[#F2F4F6] antialiased">
-      <div className="mx-auto max-w-lg px-5 py-12">{children}</div>
+      <div className="mx-auto max-w-lg px-5 py-12">
+        <Link href="/" className="mb-10 inline-flex items-center gap-1">
+          <span className="text-2xl font-bold tracking-tight leading-none">atom</span>
+          <span className="text-2xl font-bold leading-none text-[#2D9CDB]">.</span>
+        </Link>
+        {children}
+      </div>
     </main>
   );
 }

@@ -95,6 +95,16 @@ const plata = [
 export default function ReferidosPage() {
   return (
     <main className="bg-[#0B0B0B] text-[#F2F4F6] antialiased">
+      {/* Logo */}
+      <div className="border-b border-[#242424]">
+        <div className="mx-auto max-w-5xl px-6 py-6">
+          <Link href="/" className="inline-flex items-center gap-1">
+            <span className="text-2xl font-bold tracking-tight leading-none">atom</span>
+            <span className="text-2xl font-bold leading-none text-[#2D9CDB]">.</span>
+          </Link>
+        </div>
+      </div>
+
       {/* Hero */}
       <section className="border-b border-[#242424]">
         <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
