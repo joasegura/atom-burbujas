@@ -16,10 +16,7 @@ const navigation = {
     { name: "Nosotros", href: "#nosotros" },
     { name: "Industrias", href: "#industrias" },
   ],
-  recursos: [
-    { name: "Casos de éxito", href: "#" },
-    { name: "Preguntas frecuentes", href: "#" },
-  ],
+  paginas: [{ name: "Programa de referidos", href: "/afiliados" }],
 }
 
 export function Footer() {
@@ -58,7 +55,7 @@ export function Footer() {
           </form>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-12">
           {/* Logo and description */}
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-1 mb-6">
@@ -110,6 +107,23 @@ export function Footer() {
             <h4 className="font-semibold text-secondary-foreground mb-4">Empresa</h4>
             <ul className="space-y-3">
               {navigation.empresa.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="text-secondary-foreground/70 hover:text-primary transition-colors text-sm"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Páginas */}
+          <div>
+            <h4 className="font-semibold text-secondary-foreground mb-4">Páginas</h4>
+            <ul className="space-y-3">
+              {navigation.paginas.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
