@@ -1,5 +1,5 @@
 // Única fuente del número de WhatsApp de AtomIT.
-export const WHATSAPP_NUMBER = "5493772617109"
+export const WHATSAPP_NUMBER = "5491126678238"
 
 export function buildWhatsAppUrl(message?: string) {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`
