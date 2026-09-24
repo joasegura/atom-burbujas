@@ -172,11 +172,11 @@ export function Footer() {
             © 2025 Atom Soluciones IT. Todos los derechos reservados.
           </p>
           <div className="flex gap-6">
-            <Link href="#" className="text-sm text-secondary-foreground/60 hover:text-primary transition-colors">
-              Términos y Condiciones
-            </Link>
-            <Link href="#" className="text-sm text-secondary-foreground/60 hover:text-primary transition-colors">
-              Políticas de Privacidad
+            <Link
+              href="/privacidad"
+              className="text-sm text-secondary-foreground/60 hover:text-primary transition-colors"
+            >
+              Términos y Privacidad
             </Link>
           </div>
         </div>
